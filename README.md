@@ -154,7 +154,7 @@ The Flask app provides a user-friendly interface where users can input the requi
 
 Watch our video demonstration of the app in action:
 ![heart_fail](https://github.com/bla999ckt/HeartAI/blob/main/assets/heart_fail.gif)
-![heart_success](https://github.com/bla999ckt/HeartAI/blob/main/assets/heart_success.gif)
+![heart_success](https://github.com/bla999ckt/HeartAI/blob/main/assets/heart_sucess.gif)
 
 ---
 

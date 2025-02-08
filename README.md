@@ -99,9 +99,6 @@ joblib.dump(model, 'heart_disease_model.pkl')
 
 After training, our model achieved an accuracy of **98.54%**. We also evaluated it using a confusion matrix and classification report, confirming that the model reliably distinguishes between patients with and without heart disease.
 
-> **Example: Confusion Matrix**  
-> ![Confusion Matrix](assets/Conmatrix)
-
 ---
 
 ## Flask Web Application
@@ -189,9 +186,9 @@ The Flask app provides a user-friendly interface where users can input the requi
 ### Videos Demo
 
 Watch our video demonstration of the app in action:
-[Watch the Video](assets/heart_fail.mov)
+![heart_fail](assets/heart_fail.gif)
 
-[Watch the Video](assets/heart_success.mov)
+![heart_success](assets/heart_success.gif)
 
 ---
 

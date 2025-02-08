@@ -86,8 +86,8 @@ The Flask app provides a user-friendly interface where users can input the requi
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/bla999ckt/HeartAi.git
-   cd HeartAi
+   git clone https://github.com/bla999ckt/HeartAI.git
+   cd HeartAI
    ```
 
 2. **Create and activate a virtual environment:**

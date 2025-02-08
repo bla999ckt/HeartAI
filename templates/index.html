@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HeartAI - Cardiac Health Predictor</title>
+  
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- Main CSS (Place this file in your static folder) -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-heartbeat"></i>
+        <span>HeartAI</span>
+      </div>
+      <h1>Cardiac Health Assessment</h1>
+      <p class="subtitle">AI-powered heart disease risk prediction</p>
+    </header>
+
+    <!-- Main Content: Two-column layout -->
+    <main class="main-content">
+      <!-- Left Column: Form Section -->
+      <section class="form-section">
+        <form id="predict-form" action="/predict" method="post">
+          <!-- Personal Information -->
+          <div class="form-card">
+            <h2><i class="fas fa-user"></i> Personal Information</h2>
+            <div class="input-group">
+              <label for="age">Age <span class="units">(years)</span></label>
+              <input type="number" id="age" name="age" min="18" max="120" required>
+            </div>
+            <div class="input-group">
+              <label>Gender</label>
+              <div class="gender-select">
+                <label class="radio-option">
+                  <input type="radio" name="sex" value="1" required>
+                  <span>Male</span>
+                </label>
+                <label class="radio-option">
+                  <input type="radio" name="sex" value="0" required>
+                  <span>Female</span>
+                </label>
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="cp">Chest Pain Type</label>
+              <select id="cp" name="cp" required>
+                <option value="">Select</option>
+                <option value="0">Typical Angina</option>
+                <option value="1">Atypical Angina</option>
+                <option value="2">Non-anginal Pain</option>
+                <option value="3">Asymptomatic</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Clinical Measurements -->
+          <div class="form-card">
+            <h2><i class="fas fa-stethoscope"></i> Clinical Measurements</h2>
+            <div class="input-group">
+              <label for="trestbps">Resting BP <span class="units">(mm Hg)</span></label>
+              <input type="number" id="trestbps" name="trestbps" min="50" max="250" required>
+            </div>
+            <div class="input-group">
+              <label for="chol">Cholesterol <span class="units">(mg/dl)</span></label>
+              <input type="number" id="chol" name="chol" min="100" max="600" required>
+            </div>
+            <div class="input-group">
+              <label for="fbs">Fasting Blood Sugar > 120 mg/dl</label>
+              <select id="fbs" name="fbs" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="restecg">Resting ECG</label>
+              <select id="restecg" name="restecg" required>
+                <option value="">Select</option>
+                <option value="0">Normal</option>
+                <option value="1">ST-T Wave Abnormality</option>
+                <option value="2">Left Ventricular Hypertrophy</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="thalach">Max Heart Rate <span class="units">(bpm)</span></label>
+              <input type="number" id="thalach" name="thalach" min="60" max="220" required>
+            </div>
+            <div class="input-group">
+              <label for="exang">Exercise-Induced Angina</label>
+              <select id="exang" name="exang" required>
+                <option value="">Select</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="oldpeak">ST Depression (oldpeak)</label>
+              <input type="number" step="0.1" id="oldpeak" name="oldpeak" required>
+            </div>
+            <div class="input-group">
+              <label for="slope">Slope of the Peak Exercise ST Segment</label>
+              <select id="slope" name="slope" required>
+                <option value="">Select</option>
+                <option value="0">Upsloping</option>
+                <option value="1">Flat</option>
+                <option value="2">Downsloping</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="ca">Number of Major Vessels <span class="units">(0-3)</span></label>
+              <input type="number" id="ca" name="ca" min="0" max="3" required>
+            </div>
+            <div class="input-group">
+              <label for="thal">Thalassemia</label>
+              <select id="thal" name="thal" required>
+                <option value="">Select</option>
+                <option value="1">Normal</option>
+                <option value="2">Fixed Defect</option>
+                <option value="3">Reversible Defect</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="submit" class="predict-btn">
+              <i class="fas fa-brain"></i> Analyze Results
+              <div class="loading-dots"><span></span></div>
+            </button>
+            <button type="reset" class="reset-btn">
+              <i class="fas fa-undo"></i> Clear Form
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Column: Prediction Result -->
+      <section class="result-section" id="result-section">
+        {% if prediction %}
+          <div class="result-card {% if prediction == 'Heart Disease Detected' %}danger{% else %}success{% endif %}">
+            <i class="result-icon {% if prediction == 'Heart Disease Detected' %}fas fa-exclamation-triangle{% else %}fas fa-check-circle{% endif %}"></i>
+            <h2 class="result-text">{{ prediction }}</h2>
+            {% if prediction == 'Heart Disease Detected' %}
+              <div class="additional-instructions">
+                <p><strong>Important:</strong> Please consult a healthcare professional immediately.</p>
+                <p>If you are experiencing symptoms or feel unwell, contact your doctor or your local emergency services right away.</p>
+                <p>For more information and trusted resources, please visit:</p>
+                <ul class="trusted-websites">
+                  <li><a href="https://www.heart.org" target="_blank">American Heart Association</a></li>
+                  <li><a href="https://www.cdc.gov/heartdisease/" target="_blank">CDC Heart Disease Information</a></li>
+                  <li><a href="https://www.mayoclinic.org" target="_blank">Mayo Clinic</a></li>
+                  <li><a href="https://www.nhlbi.nih.gov" target="_blank">National Heart, Lung, and Blood Institute</a></li>
+                </ul>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      </section>
+    </main>
+  </div>
+
+  <!-- Optional: Prediction Modal -->
+  <div id="predictionModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div id="result-message">
+        <!-- Dynamic content injected here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript for Modal and Autofocus Handling -->
+  <script defer>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Delay the scroll logic to ensure the result panel is rendered
+      setTimeout(function() {
+        const resultSection = document.getElementById('result-section');
+        if (resultSection) {
+          // Check if the danger result (i.e., "Heart Disease Detected") is present
+          const dangerResult = resultSection.querySelector('.result-card.danger');
+          const successResult = resultSection.querySelector('.result-card.success');
+          if (dangerResult || successResult) {
+            // Get the result section's bounding rectangle
+            const rect = resultSection.getBoundingClientRect();
+            // Calculate the scroll position so that the result section is centered in the viewport
+            const scrollTop = window.pageYOffset + rect.top - ((window.innerHeight - rect.height) / 2);
+            window.scrollTo({ top: scrollTop, behavior: 'smooth' });
+          }
+        }
+      }, 300); // Delay in milliseconds (adjust as needed)
+      
+      // Modal handling (if using modal)
+      const modal = document.getElementById('predictionModal');
+      const closeBtn = document.querySelector('.close-btn');
+      if (closeBtn) {
+        closeBtn.onclick = () => modal.style.display = 'none';
+      }
+      window.onclick = (event) => {
+        if (event.target === modal) modal.style.display = 'none';
+      };
+    });
+    </script>    
+</body>
+</html>

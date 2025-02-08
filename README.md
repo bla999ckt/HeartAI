@@ -150,13 +150,14 @@ The Flask app provides a user-friendly interface where users can input the requi
   ![Data Analysis](assets/heart_analysis.png)
   
 
-## Videos Demo
-###Watch our video demonstration of the app in action:
+## Video Demo: Watch our video demonstrations of the app in action:
 
-- **On a small size screen (phone):**
+### On a small size screen (phone):
+  
 ![heart_fail](https://github.com/bla999ckt/HeartAI/blob/main/assets/heart_fail.gif)
 
-- **On a large size screen (laptop):**
+### On a large size screen (laptop):
+  
 ![heart_success](https://github.com/bla999ckt/HeartAI/blob/main/assets/heart_sucess.gif)
 
 ---

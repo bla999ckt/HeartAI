@@ -59,45 +59,14 @@ We used **pandas** to load and clean the data and **seaborn** along with **matpl
 
 We preprocessed the data by scaling the numerical features and then split the dataset into training and test sets. A **Random Forest Classifier** was trained on the data.
 
-### Sample Code for Model Training
-
-```python
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
-import joblib
-
-# Load dataset
-data = pd.read_csv('heart.csv')
-
-# Data Preprocessing (e.g., scaling numerical features)
-# (Include your preprocessing steps here)
-
-# Splitting the data
-X = data.drop(columns=['target'])
-y = data['target']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Train the model
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
-
-# Evaluate model accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Model Accuracy: {accuracy * 100:.2f}%")  # Expected: 98.54%
-
-# Save the model
-joblib.dump(model, 'heart_disease_model.pkl')
-```
-
 ---
 
 ## Model Evaluation
 
 After training, our model achieved an accuracy of **98.54%**. We also evaluated it using a confusion matrix and classification report, confirming that the model reliably distinguishes between patients with and without heart disease.
+
+- **Accuracy:**
+  ![Accuracy](assets/heart_accuracy.png)
 
 ---
 
@@ -117,8 +86,8 @@ The Flask app provides a user-friendly interface where users can input the requi
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/yourusername/heart-disease-prediction.git
-   cd heart-disease-prediction
+   git clone https://github.com/bla999ckt/HeartAi.git
+   cd HeartAi
    ```
 
 2. **Create and activate a virtual environment:**
@@ -140,7 +109,7 @@ The Flask app provides a user-friendly interface where users can input the requi
 5. **Train the Model:**
 
    ```bash
-   python train_model.py
+   python heart.ipynp
    ```
 
 6. **Run the Flask App:**
@@ -179,9 +148,7 @@ The Flask app provides a user-friendly interface where users can input the requi
 
 - **Data Analysis Visualization:**
   ![Data Analysis](assets/heart_analysis.png)
-
-- **Accuracy:**
-  ![Accuracy](assets/heart_accuracy.png)
+  
 
 ### Videos Demo
 
